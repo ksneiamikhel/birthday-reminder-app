@@ -1,5 +1,7 @@
 const TELEGRAM_API = 'https://api.telegram.org';
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8579587091:AAEk3rHveGggMVeKWw0rCe8dUuaRTDZjRdg';
+const WELCOME_MESSAGE = process.env.TELEGRAM_WELCOME_MESSAGE ||
+  '✅ Birthday Reminder Connected!\n\nI will notify you 7 days before each birthday with gift suggestions. 🎁';
 
 async function sendTelegramMessage(chatId, text) {
   try {
@@ -34,14 +36,12 @@ export default async function handler(req, res) {
   if (update.message && update.message.text === '/start') {
     const chatId = update.message.chat.id;
     const userId = update.message.from.id;
+    const username = update.message.from.username || `user_${userId}`;
 
-    console.log(`[TELEGRAM] User ${userId} started bot, Chat ID: ${chatId}`);
+    console.log(`[TELEGRAM] User ${username} (${userId}) started bot, Chat ID: ${chatId}`);
 
-    // Send confirmation message
-    await sendTelegramMessage(
-      chatId,
-      '✅ <b>Birthday Reminder Connected!</b>\n\nI will notify you 7 days before each birthday with gift suggestions. 🎁'
-    );
+    // Send customized welcome message
+    await sendTelegramMessage(chatId, WELCOME_MESSAGE);
   }
 
   res.json({ ok: true });
