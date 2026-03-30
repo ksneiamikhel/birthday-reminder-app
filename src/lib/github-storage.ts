@@ -1,6 +1,8 @@
 import type { PeopleFile } from '../types';
 
-const API_URL = import.meta.env.DEV ? 'http://localhost:3001' : '';
+const API_URL = import.meta.env.DEV
+  ? 'http://localhost:3001'
+  : 'https://birthday-reminder-app-five.vercel.app';
 
 /**
  * Read people.json from GitHub (via backend API)
