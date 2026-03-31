@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { usePeople } from '../hooks/usePeople';
+import { normalizeSocialLinks } from '../lib/url-utils';
 import type { Person } from '../types';
 
 export default function AddPersonPage() {
@@ -59,7 +60,7 @@ export default function AddPersonPage() {
         name: formData.name,
         birthday: formData.birthday,
         preferences: formData.preferences,
-        socialLinks: formData.socialLinks,
+        socialLinks: normalizeSocialLinks(formData.socialLinks),
       };
 
       await addPerson(newPerson);
